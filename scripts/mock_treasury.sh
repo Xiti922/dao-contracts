@@ -13,23 +13,23 @@ VALIDATOR_ADDRESS=$(echo xxxxxxxxx | docker exec -i cosmwasm  junod keys show va
 echo "VALIDATOR_ADDRESS: $VALIDATOR_ADDRESS"
 
 # NOTE: you will need to update these to deploy on different network
-BINARY='docker exec -i cosmwasm junod'
-DENOM='ustake'
-CHAIN_ID='testing'
-RPC='http://localhost:26657/'
+BINARY='docker exec -i cosmwasm chtd'
+DENOM='ucht'
+CHAIN_ID='morocco-1'
+RPC='https://rpc-chronic.zenchainlabs.io/'
 FLAGS="--chain-id $CHAIN_ID --node $RPC"
-TXFLAG="--gas-prices 0.01$DENOM --gas auto --gas-adjustment 1.3 -y -b block $FLAGS"
+TXFLAG="--gas-prices 200000ucgas --gas auto --gas-adjustment 1.3 -y -b block $FLAGS"
 
 echo "Address to deploy contracts: $1"
 echo "TX Flags: $TXFLAG"
 
 #### NATIVE ####
 
-echo $PASSWORD | $BINARY tx send $VALIDATOR_ADDRESS $CW_DAO_CONTRACT 100000000ustake --from $VALIDATOR_ADDRESS $TXFLAG --output json
+echo $PASSWORD | $BINARY tx send $VALIDATOR_ADDRESS $CW_DAO_CONTRACT 100000000ucht --from $VALIDATOR_ADDRESS $TXFLAG --output json
 
-echo $PASSWORD | $BINARY tx send $VALIDATOR_ADDRESS $CW_DAO_CONTRACT 200000000ustake --from $VALIDATOR_ADDRESS $TXFLAG --output json
+echo $PASSWORD | $BINARY tx send $VALIDATOR_ADDRESS $CW_DAO_CONTRACT 200000000ucht --from $VALIDATOR_ADDRESS $TXFLAG --output json
 
-echo $PASSWORD | $BINARY tx send $VALIDATOR_ADDRESS $CW_DAO_CONTRACT 300000000ustake --from $VALIDATOR_ADDRESS $TXFLAG --output json
+echo $PASSWORD | $BINARY tx send $VALIDATOR_ADDRESS $CW_DAO_CONTRACT 300000000ucht --from $VALIDATOR_ADDRESS $TXFLAG --output json
 
 NATIVE_BALANCE=$($BINARY q bank balances $CW_DAO_CONTRACT $FLAGS)
 echo "DAO NATIVE BALANCE: $NATIVE_BALANCE"
