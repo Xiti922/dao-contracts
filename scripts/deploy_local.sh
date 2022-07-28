@@ -33,7 +33,7 @@ docker run --rm -d --name $CONTAINER_NAME \
     -e UNSAFE_CORS=true \
     -p 1317:1317 -p 26656:26656 -p 26657:26657 \
     --mount type=volume,source=chtd_data,target=/root \
-    ghcr.io/cosmoscontracts/juno:$IMAGE_TAG /opt/setup_and_run.sh $1
+    docker pull carlosbie/chronic:1.7 /opt/setup_and_run.sh $1
 
 # Compile code
 docker run --rm -v "$(pwd)":/code \
